@@ -162,7 +162,7 @@ pxc:
     ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
     ##   GKE, AWS & OpenStack)
     ##
-    # storageClass: "-"
+     storageClass: "csi-rbd-sc"
     accessMode: ReadWriteOnce
     size: 8Gi
 
@@ -201,7 +201,7 @@ pxc:
 haproxy:
   enabled: true
   size: 3
-  image: ""
+  image: docker.io/percona/percona-xtradb-cluster-operator:1.14.0-haproxy
   # imagePullPolicy: Always
   imagePullSecrets: []
   # - name: private-registry-credentials
@@ -519,7 +519,7 @@ proxysql:
 
 logcollector:
   enabled: true
-  image: ""
+  image: docker.io/percona/percona-xtradb-cluster-operator:1.14.0-logcollector
   # imagePullPolicy: Always
   imagePullSecrets: []
   # configuration: |
@@ -559,7 +559,7 @@ backup:
   enabled: true
   # allowParallel: true
   image:
-    repository: percona/percona-xtradb-cluster-operator
+    repository: docker.io/percona/percona-xtradb-cluster-operator
     tag: 1.14.0-pxc8.0-backup-pxb8.0.35
   # backoffLimit: 6
   # serviceAccountName: percona-xtradb-cluster-operator
@@ -568,22 +568,22 @@ backup:
   # - name: private-registry-credentials
   pitr:
     enabled: false
-    storageName: s3-us-west-binlogs
+    storageName: percona-backup
     timeBetweenUploads: 60
     timeoutSeconds: 60
     resources:
       requests: {}
       limits: {}
-  storages: {}
-    # fs-pvc:
-    #   type: filesystem
-    #   volume:
-    #     persistentVolumeClaim:
-    #       storageClassName: standard
-    #       accessModes: ["ReadWriteOnce"]
-    #       resources:
-    #         requests:
-    #           storage: 6Gi
+  storages: 
+     percona-backup:
+       type: filesystem
+       volume:
+         persistentVolumeClaim:
+           storageClassName: csi-rbd-sc
+           accessModes: ["ReadWriteOnce"]
+           resources:
+             requests:
+               storage: 1Gi
     # s3-us-west:
     #   type: s3
     #   verifyTLS: true
@@ -660,11 +660,11 @@ backup:
     #     endpointUrl: https://accountName.blob.core.windows.net
     #     storageClass: Hot
 
-  schedule: []
-    # - name: "daily-backup"
-    #   schedule: "0 0 * * *"
-    #   keep: 5
-    #   storageName: fs-pvc
+  schedule: 
+     - name: "daily-backup"
+       schedule: "0 0 * * *"
+       keep: 5
+       storageName: percona-backup
     # - name: "sat-night-backup"
     #   schedule: "0 0 * * 6"
     #   keep: 3
@@ -672,19 +672,19 @@ backup:
 
 secrets:
   ## You should be overriding these with your own or specify name for clusterSecretName.
-  # passwords:
-  #   root: insecure-root-password
-  #   xtrabackup: insecure-xtrabackup-password
-  #   monitor: insecure-monitor-password
-  #   clustercheck: insecure-clustercheck-password
-  #   proxyadmin: insecure-proxyadmin-password
+   passwords:
+     root: insecure-root-password
+     xtrabackup: insecure-xtrabackup-password
+     monitor: insecure-monitor-password
+     clustercheck: insecure-clustercheck-password
+     proxyadmin: insecure-proxyadmin-password
   #   pmmserver: insecure-pmmserver-password
   #   # If pmmserverkey is set in that case pmmserver pass will not be included
   #   # pmmserverkey: set-pmmserver-api-key
-  #   operator: insecure-operator-password
-  #   replication: insecure-replication-password
+     operator: insecure-operator-password
+     replication: insecure-replication-password
   ## If you are using `cert-manager` you can skip this next section.
-  tls: {}
+  tls: 
     # This should be the name of a secret that contains certificates.
     # it should have the following keys: `ca.crt`, `tls.crt`, `tls.key`
     # If not set the Helm chart will attempt to create certificates
