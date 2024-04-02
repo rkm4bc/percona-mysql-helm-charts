@@ -162,7 +162,7 @@ pxc:
     ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
     ##   GKE, AWS & OpenStack)
     ##
-     storageClass: "csi-rbd-sc"
+     storageClass: csi-rbd-sc
     accessMode: ReadWriteOnce
     size: 8Gi
 
