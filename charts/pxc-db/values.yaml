@@ -163,6 +163,7 @@ pxc:
     ##   GKE, AWS & OpenStack)
     ##
     storageClass: csi-rbd-sc
+    reclaimPolicy: Retain
     accessMode: ReadWriteOnce
     size: 8Gi
 
