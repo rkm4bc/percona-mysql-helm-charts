@@ -557,7 +557,7 @@ pmm:
     limits: {}
 
 backup:
-  enabled: true
+  enabled: false
   # allowParallel: true
   image:
     repository: docker.io/percona/percona-xtradb-cluster-operator
@@ -661,11 +661,11 @@ backup:
     #     endpointUrl: https://accountName.blob.core.windows.net
     #     storageClass: Hot
 
-  schedule: 
-     - name: "daily-backup"
-       schedule: "0 0 * * *"
-       keep: 5
-       storageName: percona-backup
+  #schedule: 
+  #   - name: "daily-backup"
+  #     schedule: "0 0 * * *"
+  #     keep: 5
+  #     storageName: percona-backup
     # - name: "sat-night-backup"
     #   schedule: "0 0 * * 6"
     #   keep: 3
