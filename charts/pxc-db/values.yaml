@@ -52,7 +52,7 @@ tls: {}
   #   group: cert-manager.io
 
 pxc:
-  size: 1
+  size: 5
   image:
     repository: docker.io/percona/percona-xtradb-cluster
     tag: 8.0.35-27.1
@@ -165,7 +165,7 @@ pxc:
     storageClass: csi-rbd-sc
     reclaimPolicy: Retain
     accessMode: ReadWriteOnce
-    size: 8Gi
+    size: 1Gi
 
   # If you set this to true the cluster will be created without TLS
   disableTLS: false
