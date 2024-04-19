@@ -19,7 +19,7 @@ annotations: {}
 
 operatorImageRepository: docker.io/percona/percona-xtradb-cluster-operator
 
-crVersion: 1.14.1
+crVersion: 1.14.2
 ignoreAnnotations: []
   # - iam.amazonaws.com/role
 ignoreLabels: []
@@ -52,7 +52,7 @@ tls: {}
   #   group: cert-manager.io
 
 pxc:
-  size: 5
+  size: 4
   image:
     repository: docker.io/percona/percona-xtradb-cluster
     tag: 8.0.35-27.1
@@ -142,7 +142,7 @@ pxc:
     #   effect: "NoExecute"
     #   tolerationSeconds: 6000
   gracePeriod: 600
-  # lifecycle:
+  # lifecycleF
   #   preStop:
   #     exec:
   #       command: [ "/bin/true" ]
