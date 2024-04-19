@@ -52,7 +52,7 @@ tls: {}
   #   group: cert-manager.io
 
 pxc:
-  size: 3
+  size: 1
   image:
     repository: docker.io/percona/percona-xtradb-cluster
     tag: 8.0.35-27.1
@@ -201,7 +201,7 @@ pxc:
 
 haproxy:
   enabled: true
-  size: 3
+  size: 1
   image: docker.io/percona/percona-xtradb-cluster-operator:1.14.0-haproxy
   # imagePullPolicy: Always
   imagePullSecrets: []
@@ -506,7 +506,7 @@ proxysql:
     ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
     ##   GKE, AWS & OpenStack)
     ##
-    # storageClass: "-"
+    storageClass: csi-rbd-sc
     accessMode: ReadWriteOnce
     size: 8Gi
   # A custom Kubernetes Security Context for a Container to be used instead of the default one
