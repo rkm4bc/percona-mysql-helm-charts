@@ -643,7 +643,7 @@ backup:
        s3:
          bucket: percona-backups-test
     #     # Use credentialsSecret OR credentialsAccessKey/credentialsSecretKey
-         credentialsSecret: backup-ceph-s3
+        # credentialsSecret: backup-ceph-s3
          credentialsAccessKey: Z0L2HYN1J8M8I5RVUA9E
          credentialsSecretKey: V0L5gkGeREHJAO6FoJSoxdDhNIvBKcYXAf4uDBWE
     #     region: us-west-2
